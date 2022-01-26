@@ -11292,6 +11292,11 @@ return jQuery;
 },{"process":"../../../../../.config/yarn/global/node_modules/process/browser.js"}],"computed.js":[function(require,module,exports) {
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
 var _jquery = _interopRequireDefault(require("jquery"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -11311,18 +11316,22 @@ var m = {
 
 var v = {
   el: null,
-  computedHtml: "\n        <div class=\"showNumber\">\n            <span class=\"output\">{{currentNumber}}</span>\n        </div>\n        <button class=\"add\">+10</button>\n        <button class=\"sub\">-10</button>\n        <button class=\"multiply\">*2</button>\n        <button class=\"divide\">\xF72</button>\n"
+  computedHtml: "\n        <div class=\"showNumber\">\n            <span class=\"output\">{{currentNumber}}</span>\n        </div>\n        <button class=\"add\">+10</button>\n        <button class=\"sub\">-10</button>\n        <button class=\"multiply\">*2</button>\n        <button class=\"divide\">\xF72</button>\n    ",
+  init: function init(container) {
+    v.el = (0, _jquery.default)(container);
+  }
 }; //方法相关的放在c
 
 var c = {
-  init: function init() {
+  init: function init(container) {
+    v.init(container);
     m.currentNumber = localStorage.getItem('currentNumber') * 1 || (0, _jquery.default)('.showNumber >span').text() * 1;
+    c.render();
   },
   render: function render() {
     var newHtml = v.computedHtml.replace(/{{currentNumber}}/, m.currentNumber + ''); //replace这里是返回
 
-    v.el = '.computed';
-    (0, _jquery.default)('.computed').html(newHtml);
+    v.el.html(newHtml);
     c.bindMethods();
   },
   bindMethods: function bindMethods() {
@@ -11360,8 +11369,8 @@ var c = {
     });
   }
 };
-c.init();
-c.render();
+var _default = c;
+exports.default = _default;
 },{"jquery":"../node_modules/jquery/dist/jquery.js"}],"selectBox.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
@@ -11443,13 +11452,17 @@ require("./default.css");
 
 require("./formoat.css");
 
-require("./computed.js");
+var _computed = _interopRequireDefault(require("./computed.js"));
 
 require("./selectBox.js");
 
 require("./move.js");
 
 require("./round.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+_computed.default.init('.computed');
 },{"./default.css":"default.css","./formoat.css":"formoat.css","./computed.js":"computed.js","./selectBox.js":"selectBox.js","./move.js":"move.js","./round.js":"round.js"}],"../../../../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

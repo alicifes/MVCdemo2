@@ -24,17 +24,22 @@ const v = {
         <button class="sub">-10</button>
         <button class="multiply">*2</button>
         <button class="divide">÷2</button>
-`
+    `,
+    init:(container)=>{
+        v.el = $(container)
+    }
+
 }
 //方法相关的放在c
 const c = {
-    init:()=>{
+    init:(container)=>{
+        v.init(container)
         m.currentNumber = localStorage.getItem('currentNumber')*1||$('.showNumber >span').text()*1
+        c.render()
     },
     render:()=>{
         let newHtml =  v.computedHtml.replace(/{{currentNumber}}/,m.currentNumber+'')//replace这里是返回
-        v.el = '.computed'
-        $('.computed').html(newHtml)
+        v.el.html(newHtml)
         c.bindMethods()
     },
     bindMethods:()=>{
@@ -65,8 +70,8 @@ const c = {
     }
 
 }
-c.init()
-c.render()
 
+
+export default c
 
 
