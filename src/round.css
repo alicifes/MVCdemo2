@@ -1,0 +1,17 @@
+.roundDiv{
+    border: 1px solid black;
+    width: 30vh;
+    height: 30vh;
+    border-radius: 50%;
+}
+@keyframes colourful {
+    0%{
+        background-color: red;
+    }
+    100%{
+        background-color: purple;
+    }
+}
+.colorful {
+    animation: colourful  alternate 1s linear infinite;
+}

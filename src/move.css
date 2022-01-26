@@ -1,0 +1,14 @@
+.moveDiv{
+    border: 1px solid black;
+    width: 8vw;
+    height: 8vw;
+    border-radius: 50%;
+    margin-top: 5vh;
+    margin-left: 3vw;
+    transition: transform 1s;
+}
+
+.moving{
+    transform: translateX(10vw);
+}
+

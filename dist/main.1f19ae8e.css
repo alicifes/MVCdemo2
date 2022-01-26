@@ -1,0 +1,83 @@
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+*::before *::after{
+    box-sizing: border-box;
+}
+body::-webkit-scrollbar{display:none}
+
+ol{
+   list-style: none;
+}
+
+.page{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+section {
+    border: 1px solid red;
+    width: 50vw;
+    height: 50vh;
+}
+
+.selectBoxContainer{
+    margin-left: 5vw;
+    margin-top: 2vh;
+}
+.nav{
+    display: flex;
+}
+.nav1,.nav2{
+    border: 1px solid black;
+    width: 20vw;
+}
+.navContent{
+    border: 1px solid blue;
+    width: 40vw;
+    height: 40vh;
+}
+.navSelected{
+    background-color: yellow;
+}
+.disSelected{
+    display: none;
+}
+
+.moveDiv{
+    border: 1px solid black;
+    width: 8vw;
+    height: 8vw;
+    border-radius: 50%;
+    margin-top: 5vh;
+    margin-left: 3vw;
+    transition: transform 1s;
+}
+
+.moving{
+    transform: translateX(10vw);
+}
+
+
+.roundDiv{
+    border: 1px solid black;
+    width: 30vh;
+    height: 30vh;
+    border-radius: 50%;
+}
+@keyframes colourful {
+    0%{
+        background-color: red;
+    }
+    100%{
+        background-color: purple;
+    }
+}
+.colorful {
+    animation: colourful  alternate 1s linear infinite;
+}
+
+
+/*# sourceMappingURL=/main.1f19ae8e.css.map */

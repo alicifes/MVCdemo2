@@ -1,0 +1,22 @@
+.selectBoxContainer{
+    margin-left: 5vw;
+    margin-top: 2vh;
+}
+.nav{
+    display: flex;
+}
+.nav1,.nav2{
+    border: 1px solid black;
+    width: 20vw;
+}
+.navContent{
+    border: 1px solid blue;
+    width: 40vw;
+    height: 40vh;
+}
+.navSelected{
+    background-color: yellow;
+}
+.disSelected{
+    display: none;
+}
