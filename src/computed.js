@@ -3,7 +3,7 @@ import $ from "jquery";
 
 //数据相关的放在m,m有四个方法
 const m = {
-    currentNumber:null,
+    currentNumber:localStorage.getItem('currentNumber')*1,
     create(){},
     delete(){},
     update(data){
@@ -15,7 +15,7 @@ const m = {
 }
 //视图相关的放在v
 const v = {
-    el:null,
+    el:null,  //要挂载到哪里
     computedHtml :`
         <div class="showNumber">
             <span class="output">{{currentNumber}}</span>
@@ -34,7 +34,6 @@ const v = {
 const c = {
     init:(container)=>{
         v.init(container)
-        m.currentNumber = localStorage.getItem('currentNumber')*1||$('.showNumber >span').text()*1
         c.render()
     },
     render:()=>{

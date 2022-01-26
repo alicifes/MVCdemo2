@@ -11303,7 +11303,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 //数据相关的放在m,m有四个方法
 var m = {
-  currentNumber: null,
+  currentNumber: localStorage.getItem('currentNumber') * 1,
   create: function create() {},
   delete: function _delete() {},
   update: function update(data) {
@@ -11316,6 +11316,7 @@ var m = {
 
 var v = {
   el: null,
+  //要挂载到哪里
   computedHtml: "\n        <div class=\"showNumber\">\n            <span class=\"output\">{{currentNumber}}</span>\n        </div>\n        <button class=\"add\">+10</button>\n        <button class=\"sub\">-10</button>\n        <button class=\"multiply\">*2</button>\n        <button class=\"divide\">\xF72</button>\n    ",
   init: function init(container) {
     v.el = (0, _jquery.default)(container);
@@ -11325,7 +11326,6 @@ var v = {
 var c = {
   init: function init(container) {
     v.init(container);
-    m.currentNumber = localStorage.getItem('currentNumber') * 1 || (0, _jquery.default)('.showNumber >span').text() * 1;
     c.render();
   },
   render: function render() {
