@@ -1,12 +1,21 @@
 import $ from "jquery";
 
 
-//数据相关的放在m
+//数据相关的放在m,m有四个方法
 const m = {
     currentNumber:null,
+    create(){},
+    delete(){},
+    update(data){
+        let newData = data.n
+        localStorage.setItem('currentNumber',newData.toString())
+        c.render()
+    },
+    get(){}
 }
 //视图相关的放在v
 const v = {
+    el:null,
     computedHtml :`
         <div class="showNumber">
             <span class="output">{{currentNumber}}</span>
@@ -24,9 +33,8 @@ const c = {
     },
     render:()=>{
         let newHtml =  v.computedHtml.replace(/{{currentNumber}}/,m.currentNumber+'')//replace这里是返回
+        v.el = '.computed'
         $('.computed').html(newHtml)
-
-
         c.bindMethods()
     },
     bindMethods:()=>{
@@ -44,31 +52,21 @@ const c = {
         }
     },
     add:()=>{
-        console.log('here')
-            let countEnd = m.currentNumber+=10
-            localStorage.setItem('currentNumber',countEnd.toString())
-            c.render()
+        m.update({n:m.currentNumber+=10})
     },
     sub:()=>{
-        let countEnd = m.currentNumber-=10
-        localStorage.setItem('currentNumber',countEnd.toString())
-        c.render()
+        m.update({n:m.currentNumber-=10})
     },
     multiply:()=>{
-        let countEnd =m.currentNumber*=2
-        localStorage.setItem('currentNumber',countEnd.toString())
-        c.render()
-
+        m.update({n:m.currentNumber*=2})
     },
     divide:()=>{
-        let countEnd = m.currentNumber/=2
-        localStorage.setItem('currentNumber',countEnd.toString())
-        c.render()
+        m.update({n:m.currentNumber/=2})
     }
 
 }
-
 c.init()
 c.render()
+
 
 
