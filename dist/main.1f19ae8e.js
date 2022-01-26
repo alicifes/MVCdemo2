@@ -11390,32 +11390,54 @@ module.hot.accept(reloadCSS);
 },{"_css_loader":"../../../../../.config/yarn/global/node_modules/parcel/src/builtins/css-loader.js"}],"selectBox.js":[function(require,module,exports) {
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
 var _jquery = _interopRequireDefault(require("jquery"));
 
 require("./selectBox.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var selectBoxHtml = "\n         <div class=\"selectBoxContainer\">\n            <ol class=\"nav\">\n                <li class=\"nav1\">111</li>\n                <li class=\"nav2\">222</li>\n            </ol>\n            <ol class=\"navContent\">\n                <li class=\"content1 disSelected\">111111</li>\n                <li class=\"content2 disSelected\">222222</li>\n            </ol>\n        </div>";
-(0, _jquery.default)('.selectBox').html(selectBoxHtml);
-var $navBar = (0, _jquery.default)('.nav');
-var $navContent = (0, _jquery.default)('.navContent');
-$navBar.on('click', 'li', function (e) {
-  //区别current和currentTarget
-  var $li = (0, _jquery.default)(e.currentTarget);
-  $li.addClass('navSelected').siblings().removeClass('navSelected');
-  var index = $li.index();
-  $navContent.children().eq(index).removeClass('disSelected').siblings().addClass('disSelected');
-});
-$navBar.children().eq(0).trigger('click'); //设置默认触发trigger事件
-// $('.nav1').bind('click',()=>{
-//     $('.nav1').addClass('navSelected').siblings().removeClass('navSelected')
-//     $('.content1').removeClass('disSelected').siblings().addClass('disSelected')
-// })
-// $('.nav2').bind('click',()=>{
-//     $('.nav2').addClass('navSelected').siblings().removeClass('navSelected')
-//     $('.content2').removeClass('disSelected').siblings().addClass('disSelected')
-// })
+var eventBus = (0, _jquery.default)({});
+var m = {
+  data: {},
+  create: function create() {},
+  delete: function _delete() {},
+  update: function update() {},
+  get: function get() {}
+};
+var v = {
+  el: null,
+  selectBoxHtml: "\n         <div class=\"selectBoxContainer\">\n            <ol class=\"nav\">\n                <li class=\"nav1\">111</li>\n                <li class=\"nav2\">222</li>\n            </ol>\n            <ol class=\"navContent\">\n                <li class=\"content1 disSelected\">111111</li>\n                <li class=\"content2 disSelected\">222222</li>\n            </ol>\n        </div>",
+  init: function init(container) {
+    v.el = (0, _jquery.default)(container);
+  },
+  render: function render() {
+    (0, _jquery.default)(v.selectBoxHtml).appendTo(v.el);
+  }
+};
+var c = {
+  init: function init(container) {
+    v.init(container);
+    v.render();
+    c.bindMethods();
+    (0, _jquery.default)('.nav').children().eq(0).trigger('click'); //设置默认触发trigger事件
+  },
+  bindMethods: function bindMethods() {
+    v.el.children().on('click', 'li', function (e) {
+      //区别current和currentTarget
+      var $li = (0, _jquery.default)(e.currentTarget);
+      $li.addClass('navSelected').siblings().removeClass('navSelected');
+      var index = $li.index();
+      (0, _jquery.default)('.navContent').children().eq(index).removeClass('disSelected').siblings().addClass('disSelected');
+    });
+  }
+};
+var _default = c;
+exports.default = _default;
 },{"jquery":"../node_modules/jquery/dist/jquery.js","./selectBox.css":"selectBox.css"}],"move.css":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
@@ -11465,7 +11487,7 @@ require("./formoat.css");
 
 var _computed = _interopRequireDefault(require("./computed.js"));
 
-require("./selectBox.js");
+var _selectBox = _interopRequireDefault(require("./selectBox.js"));
 
 require("./move.js");
 
@@ -11474,6 +11496,8 @@ require("./round.js");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _computed.default.init('.computed');
+
+_selectBox.default.init('.selectBox');
 },{"./default.css":"default.css","./formoat.css":"formoat.css","./computed.js":"computed.js","./selectBox.js":"selectBox.js","./move.js":"move.js","./round.js":"round.js"}],"../../../../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';

@@ -8,3 +8,4 @@ $('.moveDiv').bind('click',()=>{
         $('.moveDiv').addClass('moving')
     }
 })
+

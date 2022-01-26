@@ -1,7 +1,5 @@
 import $ from "jquery";
 
-
-
 const eventBus = $({})
 //数据相关的放在m,m有四个方法
 const m = {
