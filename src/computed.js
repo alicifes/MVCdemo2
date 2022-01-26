@@ -1,15 +1,19 @@
 import $ from "jquery";
 
 
+
+const eventBus = $({})
 //数据相关的放在m,m有四个方法
 const m = {
     currentNumber:localStorage.getItem('currentNumber')*1,
     create(){},
     delete(){},
     update(data){
-        let newData = data.n
-        localStorage.setItem('currentNumber',newData.toString())
-        c.render()
+        Object.assign(m.currentNumber,data)  //将生成的data赋值到原来的东西之上
+        eventBus.trigger('currenNumberUpdated')
+        localStorage.setItem('currentNumber',m.currentNumber.toString())
+        // let newData = data.n
+        // c.render()
     },
     get(){}
 }
@@ -27,6 +31,15 @@ const v = {
     `,
     init:(container)=>{
         v.el = $(container)
+    },
+    render:(n)=>{
+        if(v.el.children.length!==0){
+            v.el.empty()
+        }
+        $(v.computedHtml.replace(/{{currentNumber}}/,n)).appendTo(v.el)
+        // let newHtml =  v.computedHtml.replace(/{{currentNumber}}/,m.currentNumber+'')//replace这里是返回
+        // v.el.html(newHtml)
+        //c.bindMethods() 虽然可以每次在render之后重新对按钮进行绑定，但是存在将事件绑定在父元素上就可以避免重新更新的问题
     }
 
 }
@@ -34,12 +47,11 @@ const v = {
 const c = {
     init:(container)=>{
         v.init(container)
-        c.render()
-    },
-    render:()=>{
-        let newHtml =  v.computedHtml.replace(/{{currentNumber}}/,m.currentNumber+'')//replace这里是返回
-        v.el.html(newHtml)
+        v.render(m.currentNumber)//核心的关键点，view = render(data)
         c.bindMethods()
+        eventBus.on('currenNumberUpdated',()=>{
+            v.render(m.currentNumber)
+        })
     },
     bindMethods:()=>{
         const hashMap={
@@ -51,7 +63,7 @@ const c = {
         for(let key in hashMap){
             const value = hashMap[key]
             const methods = c[value]
-            $(key).bind('click',methods)
+            v.el.on('click',key,methods)
             // $(key).on('click',key,methods)
         }
     },
@@ -69,7 +81,6 @@ const c = {
     }
 
 }
-
 
 export default c
 

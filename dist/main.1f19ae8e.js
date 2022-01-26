@@ -11301,15 +11301,18 @@ var _jquery = _interopRequireDefault(require("jquery"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-//数据相关的放在m,m有四个方法
+var eventBus = (0, _jquery.default)({}); //数据相关的放在m,m有四个方法
+
 var m = {
   currentNumber: localStorage.getItem('currentNumber') * 1,
   create: function create() {},
   delete: function _delete() {},
   update: function update(data) {
-    var newData = data.n;
-    localStorage.setItem('currentNumber', newData.toString());
-    c.render();
+    Object.assign(m.currentNumber, data); //将生成的data赋值到原来的东西之上
+
+    eventBus.trigger('currenNumberUpdated');
+    localStorage.setItem('currentNumber', m.currentNumber.toString()); // let newData = data.n
+    // c.render()
   },
   get: function get() {}
 }; //视图相关的放在v
@@ -11320,19 +11323,27 @@ var v = {
   computedHtml: "\n        <div class=\"showNumber\">\n            <span class=\"output\">{{currentNumber}}</span>\n        </div>\n        <button class=\"add\">+10</button>\n        <button class=\"sub\">-10</button>\n        <button class=\"multiply\">*2</button>\n        <button class=\"divide\">\xF72</button>\n    ",
   init: function init(container) {
     v.el = (0, _jquery.default)(container);
+  },
+  render: function render(n) {
+    if (v.el.children.length !== 0) {
+      v.el.empty();
+    }
+
+    (0, _jquery.default)(v.computedHtml.replace(/{{currentNumber}}/, n)).appendTo(v.el); // let newHtml =  v.computedHtml.replace(/{{currentNumber}}/,m.currentNumber+'')//replace这里是返回
+    // v.el.html(newHtml)
+    //c.bindMethods() 虽然可以每次在render之后重新对按钮进行绑定，但是存在将事件绑定在父元素上就可以避免重新更新的问题
   }
 }; //方法相关的放在c
 
 var c = {
   init: function init(container) {
     v.init(container);
-    c.render();
-  },
-  render: function render() {
-    var newHtml = v.computedHtml.replace(/{{currentNumber}}/, m.currentNumber + ''); //replace这里是返回
+    v.render(m.currentNumber); //核心的关键点，view = render(data)
 
-    v.el.html(newHtml);
     c.bindMethods();
+    eventBus.on('currenNumberUpdated', function () {
+      v.render(m.currentNumber);
+    });
   },
   bindMethods: function bindMethods() {
     var hashMap = {
@@ -11345,7 +11356,7 @@ var c = {
     for (var key in hashMap) {
       var value = hashMap[key];
       var methods = c[value];
-      (0, _jquery.default)(key).bind('click', methods); // $(key).on('click',key,methods)
+      v.el.on('click', key, methods); // $(key).on('click',key,methods)
     }
   },
   add: function add() {
