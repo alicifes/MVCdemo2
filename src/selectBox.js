@@ -8,9 +8,7 @@ const m = {
     },
     create(){},
     delete(){},
-    update(){
-
-    },
+    update(){},
     get(){}
 }
 const v = {
